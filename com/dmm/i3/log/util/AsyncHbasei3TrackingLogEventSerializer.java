@@ -41,11 +41,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
    public Map<String,String> logTokenize(String env){
      String[] envs = env.split(",");
      Map<String,String> res = new HashMap<String,String>();
-     System.out.println(env);
      for(int i = 0; i < envs.length; i++){
-	System.out.println(envs[i]);
-        String key = envs[i].split(":")[0];
-        String value = envs[i].split(":")[1];
+        int index = envs[i].indexOf(":");
+        String key = envs[i].substring(0,index);
+        String value = envs[i].substring(index+1,envs[i].length());
 	res.put(key,value);
      }
      return res;
@@ -60,7 +59,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
      String[] columnFamilyName;
      byte[] bFam;
      String sCol;
-     currentRowKey = Long.toString(System.currentTimeMillis()).getBytes();
+     currentRowKey = (cols.get("i3_service_code") + "_" +Long.toString((Long.MAX_VALUE- System.currentTimeMillis()))).getBytes();
      for(int i = 0; i < columnNames.length;i++){
        columnFamilyName = new String(columnNames[i]).split(":");
        bFam = columnFamilyName[0].getBytes();
